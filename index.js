@@ -92,17 +92,15 @@ module.exports = function(THREE) {
 
 			var v = new THREE.Vector3();
 
-			return function panLeft ( distance ) {
+		  return function panLeft(distance) {
+		    var te = this.object.matrix.elements;
+		    var adjDist = distance / Math.cos(phi);
 
-				var te = this.object.matrix.elements;
+		    v.set(te[ 0 ], 0, te[ 2 ]).normalize();
+		    v.multiplyScalar(-adjDist);
 
-				// get X column of matrix
-				v.set( te[ 0 ], te[ 1 ], te[ 2 ] );
-				v.multiplyScalar( - distance );
-
-				panOffset.add( v );
-
-			};
+		    panOffset.add(v);
+		  };
 
 		}();
 
@@ -111,17 +109,15 @@ module.exports = function(THREE) {
 
 			var v = new THREE.Vector3();
 
-			return function panUp ( distance ) {
+		  return function panUp(distance) {
+		    var te = this.object.matrix.elements;
+		    var adjDist = distance / Math.cos(phi);
 
-				var te = this.object.matrix.elements;
+		    v.set(te[ 8 ], 0, te[ 10 ]).normalize();
+		    v.multiplyScalar(-adjDist);
 
-				// get Y column of matrix
-				v.set( te[ 4 ], te[ 5 ], te[ 6 ] );
-				v.multiplyScalar( distance );
-
-				panOffset.add( v );
-
-			};
+		    panOffset.add(v);
+		  };
 
 		}();
 
